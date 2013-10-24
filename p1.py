@@ -5,12 +5,14 @@ import os
 
 def readPoints(fileName):
 	f = open(fileName)
-	points = f.read()
+	points = f.readLine()
 	return points
 
 def offsetPoint(point, axis, distance):
 	point[axis] = point[axis]+distance
 	return point
+
+
 
 
 def palma(args):
