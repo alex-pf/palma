@@ -1,18 +1,34 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import os
-
-
+import csv
+import rotate as R
 
 def readPoints(fileName):
-	f = open(fileName)
-	points = f.readLine()
-	return points
+	list = []
+	try:
+		f1 = open(fileName, 'r')
+		reader = csv.reader(f1)
+		for row in reader:
+				list.append(row)
+		f1.close()
+	except:
+		print "rror 1: CSV file ton't read."
+		exit(0)
+	return list
+	
+def makeFloor(floorPoint,num):
+	rez = []
+	for point in floorPoint:
+		rez.append(R.hRotatePoint(point,num))
+	return rez
 
-def offsetPoint(point, axis, distance):
-	point[axis] = point[axis]+distance
-	return point
-
-
+def writeToCSV(list, fName):
+	f  = open(fName , "wb")
+	writer = csv.writer(f, delimiter='\t', quotechar='"', quoting=csv.QUOTE_ALL)
+	for row in list:
+		line = sum(row,[])
+		writer.writerow(line)
+	f.close()
 
 
 def palma(args):
@@ -24,6 +40,8 @@ def palma(args):
 	print args.rotate
 	print (u'Точки')
 	print (u'x y z')
-	pointList = readPoints(args.file)
-	print pointList[0]
-        
+	basePoints = readPoints(args.file)
+	thePalm = []
+	for floor in xrange(0,int(args.count)):
+		thePalm.append(makeFloor(basePoints, floor))
+	writeToCSV(thePalm, 'result.csv' )

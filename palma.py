@@ -3,11 +3,6 @@ import os
 import sys
 import getopt
 import argparse
-'''
-myPath = os.path.join(os.environ.get("GIT_HOME") + u"palma")
-if not myPath in sys.path:
-	sys.path.append(myPath)
-'''
 import p1
 	
 def main():
