@@ -7,7 +7,7 @@ def readPoints(fileName):
 	list = []
 	try:
 		f1 = open(fileName, 'r')
-		reader = csv.reader(f1)
+		reader = csv.reader(f1, delimiter='\t')
 		for row in reader:
 				list.append(row)
 		f1.close()
@@ -16,10 +16,10 @@ def readPoints(fileName):
 		exit(0)
 	return list
 	
-def makeFloor(floorPoint,num):
+def makeFloor(floorPoint,num, angle):
 	rez = []
 	for point in floorPoint:
-		rez.append(R.hRotatePoint(point,num))
+		rez.append(R.hRotatePoint(point,num, angle))
 	return rez
 
 def writeToCSV(list, fName):
@@ -43,5 +43,5 @@ def palma(args):
 	basePoints = readPoints(args.file)
 	thePalm = []
 	for floor in xrange(0,int(args.count)):
-		thePalm.append(makeFloor(basePoints, floor))
+		thePalm.append(makeFloor(basePoints, floor, args.rotate))
 	writeToCSV(thePalm, 'result.csv' )
