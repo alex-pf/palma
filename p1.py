@@ -24,11 +24,13 @@ def makeFloor(floorPoint,num, angle):
 		p[2] = num*10
 		rez.append(p)
 	return rez
+
 def makeCeiling(floor):
 	rez = []
-	for point in floor:
+	ff = floor
+	for point in ff:
 		p = point
-		p[2]=point[2]+10
+		p[2]=p[2]+15
 		rez.append(p)
 	return rez
 
@@ -52,11 +54,13 @@ def palma(args):
 	print (u'x y z')
 	basePoints = readPoints(args.file)
 	thePalm = []
-	for floor in xrange(0,int(args.count)):
+	floor=0
+	while floor < int(args.count):
 		f = makeFloor(basePoints, floor, args.rotate)
-		c = makeCeiling(f)
+		#c = makeCeiling(f)
 		thePalm.append(f)
-		thePalm.append(c)
+		#thePalm.append(c)
+		floor+=1
 	'''
 	writeToCSV(thePalm, 'result.csv' )
 	print thePalm
