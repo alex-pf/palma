@@ -7,11 +7,11 @@ def setPointList(fname):
         pLine = []
         i = 0
         while i < len(row):
-            x=int(row[i])
+            x=float(row[i])
             i+=1
-            y=int(row[i])
+            y=float(row[i])
             i+=1
-            z=int(row[i])
+            z=float(row[i])
             i+=1
             pLine.append([x,y,z])
         pointList.append(pLine)
@@ -55,18 +55,9 @@ def writeToSTL(tabe, fname):
     f.close()
 
 '''
-solid OpenSCAD_Model
-  facet normal 1 0 0
-    outer loop  
-	vertex 0 0 0
-	vertex 0 0 10
-	vertex 0 10 0
-    endloop
-  endfacet
-'''
-
 
 pointList = setPointList('cube.csv')
 R = createSTLtabe(pointList)
 #p1.writeToCSV(R,'cube2.csv')
 writeToSTL(R,'cube2.stl')
+'''

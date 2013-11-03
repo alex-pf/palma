@@ -2,6 +2,7 @@
 import os
 import csv
 import rotate as R
+import draw_stl as stl
 
 def readPoints(fileName):
 	list = []
@@ -44,4 +45,11 @@ def palma(args):
 	thePalm = []
 	for floor in xrange(0,int(args.count)):
 		thePalm.append(makeFloor(basePoints, floor, args.rotate))
+	'''
 	writeToCSV(thePalm, 'result.csv' )
+	print thePalm
+	print '---------------------'
+	print stl.setPointList('result.csv')
+	'''
+	R = stl.createSTLtabe(thePalm)
+	stl.writeToSTL(R,'cube2.stl')
