@@ -25,8 +25,9 @@ def createSTLtabe(pointList):
         while p<len(pointList[i]):
             p1 = pointList[i][p]
             p2 = pointList[i+1][p]
-            p3 = pointList[i+1][p-1]
+            p3 = pointList[i][p-1]
             result.append([p1,p2,p3])
+            
             p1 = pointList[i][p]
             if p==len(pointList[i])-1:
                 p2 = pointList[i+1][0]
