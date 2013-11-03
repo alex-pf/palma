@@ -20,7 +20,9 @@ def readPoints(fileName):
 def makeFloor(floorPoint,num, angle):
 	rez = []
 	for point in floorPoint:
-		rez.append(R.hRotatePoint(point,num, angle))
+		p = R.hRotatePoint(point,num, angle)
+		p[2] = num*10
+		rez.append(p)
 	return rez
 
 def writeToCSV(list, fName):
@@ -51,5 +53,6 @@ def palma(args):
 	print '---------------------'
 	print stl.setPointList('result.csv')
 	'''
+	writeToCSV(thePalm, 'result.csv' )
 	R = stl.createSTLtabe(thePalm)
 	stl.writeToSTL(R,'cube2.stl')
