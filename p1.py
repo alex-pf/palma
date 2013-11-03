@@ -15,7 +15,13 @@ def readPoints(fileName):
 	except:
 		print "rror 1: CSV file ton't read."
 		exit(0)
-	return list
+	rez=[]
+	for row in list:
+		line=[]
+		for point in row:
+			line.append(float(point))
+		rez.append(line)
+	return rez
 	
 def makeFloor(floorPoint,num, angle):
 	rez = []
@@ -27,11 +33,8 @@ def makeFloor(floorPoint,num, angle):
 
 def makeCeiling(floor):
 	rez = []
-	ff = floor
-	for point in ff:
-		p = point
-		p[2]=p[2]+15
-		rez.append(p)
+	for point in floor:
+		rez.append([point[0],point[1],point[2]+13])
 	return rez
 
 def writeToCSV(list, fName):
@@ -57,9 +60,9 @@ def palma(args):
 	floor=0
 	while floor < int(args.count):
 		f = makeFloor(basePoints, floor, args.rotate)
-		#c = makeCeiling(f)
+		c = makeCeiling(f)
 		thePalm.append(f)
-		#thePalm.append(c)
+		thePalm.append(c)
 		floor+=1
 	'''
 	writeToCSV(thePalm, 'result.csv' )
