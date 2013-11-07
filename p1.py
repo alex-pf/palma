@@ -59,8 +59,8 @@ def palma(args):
 	thePalm = []
 	floor=0
 	while floor < int(args.count):
-		f = makeFloor(basePoints, floor, args.rotate, args.seg)
-		c = makeCeiling(f, args.seg)
+		f = makeFloor(basePoints, floor, float(args.rotate), float(args.seg))
+		c = makeCeiling(f, float(args.seg))
 		thePalm.append(f)
 		thePalm.append(c)
 		floor+=1
