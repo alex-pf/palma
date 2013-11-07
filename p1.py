@@ -23,18 +23,18 @@ def readPoints(fileName):
 		rez.append(line)
 	return rez
 	
-def makeFloor(floorPoint,num, angle):
+def makeFloor(floorPoint,num, angle, seg):
 	rez = []
 	for point in floorPoint:
 		p = R.hRotatePoint(point,num, angle)
-		p[2] = num*10
+		p[2] = num*seg
 		rez.append(p)
 	return rez
 
-def makeCeiling(floor):
+def makeCeiling(floor, seg):
 	rez = []
 	for point in floor:
-		rez.append([point[0],point[1],point[2]+13])
+		rez.append([point[0],point[1],point[2]+seg])
 	return rez
 
 def writeToCSV(list, fName):
@@ -59,8 +59,8 @@ def palma(args):
 	thePalm = []
 	floor=0
 	while floor < int(args.count):
-		f = makeFloor(basePoints, floor, args.rotate)
-		c = makeCeiling(f)
+		f = makeFloor(basePoints, floor, args.rotate, args.seg)
+		c = makeCeiling(f, args.seg)
 		thePalm.append(f)
 		thePalm.append(c)
 		floor+=1
