@@ -12,7 +12,7 @@ def get_base(fileName):
     polylineList = [] # Результат - список полилиний в виде списка списков списков
     for str in stringList:
         polyline = []
-        for point in str.strip('\n').split('   '):
+        for point in str.strip('\n').split('    '):
             P=[]
             for ord in point.split():
                 P.append(float(ord))
@@ -87,8 +87,8 @@ def get_stl(poligonList):
 
 if __name__ == "__main__":
     
-    polilyneList = get_base("points.txt")
-    
+    polilyneList = get_base("points_1.txt")
+    print polilyneList
     param =  get_param_list()
     
     floorList = []
@@ -97,9 +97,14 @@ if __name__ == "__main__":
         for pl in polilyneList:
             floor.append(h_rotate_polyline(pl, param.get('rotate')*f ))
         floorList.append(floor)
+    
+    
+    
     V = []
     for f in xrange(len(floorList)):
         V = V + (extension_wall(floorList[f], param.get('height'), param.get('offset'), f) )
+        
+    
     stl = get_stl(V)
     stlFile = open('palma.stl','w')
     stlFile.write('\n'.join(stl))
