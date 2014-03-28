@@ -86,8 +86,8 @@ def get_stl(poligonList):
     return stlText
 
 if __name__ == "__main__":
-    
-    polilyneList = get_base("points_1.txt")
+    name = 'points_1'
+    polilyneList = get_base(name + '.txt')
     print polilyneList
     param =  get_param_list()
     
@@ -106,5 +106,5 @@ if __name__ == "__main__":
         
     
     stl = get_stl(V)
-    stlFile = open('palma.stl','w')
+    stlFile = open(name+'.stl','w')
     stlFile.write('\n'.join(stl))
