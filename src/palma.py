@@ -23,7 +23,7 @@ def get_base(fileName):
 # Принять параметры: количество этажей, высота этажей в градусах, смещения центра изгиба пальмы, угол поворота этажа
 
 def get_param_list():
-    param_list= {'count':10,'height':3,'offset':10000,'rotate':11,'zoom':0.05}
+    param_list= {'count':10,'height':2,'offset':10000,'rotate':11,'zoom':0.1}
     return param_list
 
 def zoom(polyline,z):
