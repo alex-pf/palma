@@ -93,7 +93,7 @@ def get_stl(poligonList):
     return stlText
 
 if __name__ == "__main__":
-    name = 'points_1'
+    name = 'points'
     polilyneList = get_base(name + '.txt')
     print polilyneList
     param =  get_param_list()
