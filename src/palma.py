@@ -23,8 +23,15 @@ def get_base(fileName):
 # Принять параметры: количество этажей, высота этажей в градусах, смещения центра изгиба пальмы, угол поворота этажа
 
 def get_param_list():
-    param_list= {'count':10,'height':3,'offset':10000,'rotate':11}
+    param_list= {'count':10,'height':3,'offset':10000,'rotate':11,'zoom':0.05}
     return param_list
+
+def zoom(polyline,z):
+    rez = []
+    z = 1-z
+    for point in polyline:
+        rez.append([point[0]*z,point[1]*z,point[2]])
+    
 
 def h_rotate_polyline(polyline,angle):
     res = []
@@ -95,10 +102,10 @@ if __name__ == "__main__":
     for f in xrange(param.get('count')):
         floor = []
         for pl in polilyneList:
-            floor.append(h_rotate_polyline(pl, param.get('rotate')*f ))
+            polyline = zoom(pl,param.get('zoom')*f)
+            polyline = h_rotate_polyline(pl, param.get('rotate')*f )
+            floor.append(polyline)
         floorList.append(floor)
-    
-    
     
     V = []
     for f in xrange(len(floorList)):
