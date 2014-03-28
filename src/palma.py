@@ -103,8 +103,9 @@ if __name__ == "__main__":
     for f in xrange(param.get('count')):
         floor = []
         for pl in polilyneList:
-            polyline = zoom(pl,param.get('zoom')*f)
-            polyline = h_rotate_polyline(pl, param.get('rotate')*f )
+            polyline = pl
+            polyline = zoom(polyline,param.get('zoom')*f)
+            polyline = h_rotate_polyline(polyline, param.get('rotate')*f )
             floor.append(polyline)
         floorList.append(floor)
     
