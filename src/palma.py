@@ -31,6 +31,7 @@ def zoom(polyline,z):
     z = 1-z
     for point in polyline:
         rez.append([point[0]*z,point[1]*z,point[2]])
+    return rez
     
 
 def h_rotate_polyline(polyline,angle):
