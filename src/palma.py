@@ -23,7 +23,7 @@ def get_base(fileName):
 # Принять параметры: количество этажей, высота этажей в градусах, смещения центра изгиба пальмы, угол поворота этажа
 
 def get_param_list():
-    param_list= {'count':10,'height':2,'offset':10000,'rotate':20,'zoom':0}
+    param_list= {'count':9,'height':2,'offset':20000,'rotate':30,'zoom':0.1}
     return param_list
 
 def zoom(polyline,z):
@@ -174,7 +174,7 @@ def rectPolygon(polyline):
 
 
 if __name__ == "__main__":
-    name = 'points_1'
+    name = 'points'
     get_palma(name)
 #    polyline = [[-1,-2],[2,-2],[4,4],[-2,4],[2,2]]
 #    polyline = [[-300,-400,0],[-400,100,0],[0,0,0],[100,300,0],[400,-100,0],[200,-500,0]]
