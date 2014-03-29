@@ -80,25 +80,22 @@ def extension_wall(polylineList, angle, offset, floorNum):
             poligonList.append(rect4)
     return poligonList
     
-def get_stl(poligonList):
+def get_stl(rectList):
     stlText = []
     l1 = '    facet normal 1 0 0\n        outer loop'
     l2 = '        endloop\n    endfacet'
     stlText.append('solid OpenSCAD_Model')
-    for poligon in poligonList:
+    for rect in rectList:
         stlText.append(l1)
-        for point in poligon:
+        for point in rect:
             stlText.append('            vertex ' + str(point[0]) + ' ' + str(point[1]) + ' ' + str(point[2]))
         stlText.append(l2)
     stlText.append('endsolid OpenSCAD_Model')
     return stlText
 
-if __name__ == "__main__":
-    name = 'points'
+def get_palma(name):
     polilyneList = get_base(name + '.txt')
-    print polilyneList
     param =  get_param_list()
-    
     floorList = []
     for f in xrange(param.get('count')):
         floor = []
@@ -108,12 +105,64 @@ if __name__ == "__main__":
             polyline = h_rotate_polyline(polyline, param.get('rotate')*f )
             floor.append(polyline)
         floorList.append(floor)
-    
     V = []
     for f in xrange(len(floorList)):
         V = V + (extension_wall(floorList[f], param.get('height'), param.get('offset'), f) )
-        
-    
     stl = get_stl(V)
     stlFile = open(name+'.stl','w')
     stlFile.write('\n'.join(stl))
+    stlFile.close()
+
+
+
+def f(P,M,L):
+    return (L[1]-M[1])*(P[0]-M[0])/(L[0]-M[0])+M[0]
+def u(P,G,M,L):
+    if f(P,M,L)* f(G,M,L)>0:
+        return True
+    else:
+        return False
+
+
+def point_in_rect(p,a,b,c):
+    # Обход точек по часовой стрелке!
+    if u(p,a,b,c) and u(p,b,c,a) and u(p,c,a,b):
+        return True
+    else:
+        return False
+    
+def rectPolygon(polyline):
+    # Обход полилинии по часовой стрелке
+    if len(polyline)==3:
+        return [polyline]
+    else:
+        rectList = []
+        litePL = [] +  polyline
+        a = litePL.pop(-2)
+        b = litePL.pop(-1)
+        c = litePL.pop(0)
+        if len([p for p in litePL if point_in_rect(p,a,b,c)])==0:
+            polyline.pop(-1)
+            rectList.append([a,b,c])
+            rectList = rectList + rectPolygon(polyline)
+        else:
+            polyline.append(polyline.pop(0))
+            rectList = rectList + rectPolygon(polyline)
+        print rectList
+        return rectList
+        
+            
+        
+
+            
+                
+
+
+if __name__ == "__main__":
+    name = 'polygon'
+    #get_palma(name)
+    # polyline = [[-1,-2],[2,-2],[4,4],[-2,4],[2,2]]
+    polyline = [[-300,-400,0],[-400,100,0],[100,300,0],[400,-100,0],[200,-500,0]]
+    stlFile = open(name+'.stl','w')
+    stlFile.write('\n'.join(get_stl(rectPolygon(polyline))))
+    stlFile.close()
