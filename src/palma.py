@@ -23,7 +23,7 @@ def get_base(fileName):
 # Принять параметры: количество этажей, высота этажей в градусах, смещения центра изгиба пальмы, угол поворота этажа
 
 def get_param_list():
-    param_list= {'count':10,'height':2,'offset':10000,'rotate':11,'zoom':0.1}
+    param_list= {'count':10,'height':2,'offset':10000,'rotate':20,'zoom':0}
     return param_list
 
 def zoom(polyline,z):
@@ -72,16 +72,15 @@ def extension_wall(polylineList, angle, offset, floorNum):
         for j in xrange(len(polylineList[i])):
             rect1 = [downPolylineList[i][j-1],topPolylineList[i][j],downPolylineList[i][j]]
             rect2 = [downPolylineList[i][j-1],topPolylineList[i][j-1],topPolylineList[i][j]]
-            #rect3 = [topPolylineList[i][j],topPolylineList[i][j-1],topPolylineList[i][j-2]]
-            #rect4 = [downPolylineList[i][j-2],downPolylineList[i][j-1],downPolylineList[i][j]]
             poligonList.append(rect1)
             poligonList.append(rect2)
-            #poligonList.append(rect3)
-            #poligonList.append(rect4)
-    for polyline in topPolylineList:
-        poligonList = poligonList + rectPolygon(polyline)
+            
     for polyline in downPolylineList:
-        poligonList = poligonList + rectPolygon(polyline)    
+        ppp = rectPolygon(polyline)
+        print ppp
+        poligonList += ppp
+#    for polyline in topPolylineList:
+#        poligonList += rectPolygon(polyline[::-1])
     return poligonList
     
 def get_stl(rectList):
@@ -120,7 +119,18 @@ def get_palma(name):
 
 
 def f(P,M,L):
-    return (L[1]-M[1])*(P[0]-M[0])/(L[0]-M[0])+M[0]
+    try:
+        a = (L[0]-M[0])+M[0]
+        b = (L[1]-M[1])*(P[0]-M[0])
+        return a*b
+    except:
+        print 'ERROR:'
+        print P
+        print M
+        print L
+        return 'ERROR'
+
+
 def u(P,G,M,L):
     if f(P,M,L)* f(G,M,L)>0:
         return True
@@ -130,6 +140,8 @@ def u(P,G,M,L):
 
 def point_in_rect(p,a,b,c):
     # ����� ����� �� ������� �������!
+    
+    
     if u(p,a,b,c) and u(p,b,c,a) and u(p,c,a,b):
         return True
     else:
@@ -152,7 +164,6 @@ def rectPolygon(polyline):
         else:
             polyline.append(polyline.pop(0))
             rectList = rectList + rectPolygon(polyline)
-        print rectList
         return rectList
         
             
@@ -163,10 +174,20 @@ def rectPolygon(polyline):
 
 
 if __name__ == "__main__":
-    name = 'points'
-    #get_palma(name)
-    # polyline = [[-1,-2],[2,-2],[4,4],[-2,4],[2,2]]
-    polyline = [[-300,-400,0],[-400,100,0],[0,0,0],[100,300,0],[400,-100,0],[200,-500,0]]
+    name = 'points_1'
+#    get_palma(name)
+#    polyline = [[-1,-2],[2,-2],[4,4],[-2,4],[2,2]]
+#    polyline = [[-300,-400,0],[-400,100,0],[0,0,0],[100,300,0],[400,-100,0],[200,-500,0]]
+#    polyline = [[-6.09172980904259, 300.0, 348.9949670250097], [193.78643559477678, 200.0, 355.9748663655099], [293.72551829668555, 0.0, 359.46481603576], [193.78643559477678, -200.0, 355.9748663655099], [-6.09172980904259, -300.0, 348.9949670250097], [-205.96989521286196, -200.0, 342.0150676845095], [-305.90897791477073, 0.0, 338.5251180142594], [-205.96989521286196, 200.0, 342.0150676845095]]
+    polyline = get_base(name+'.txt')[0]
     stlFile = open(name+'.stl','w')
     stlFile.write('\n'.join(get_stl(rectPolygon(polyline))))
     stlFile.close()
+    
+    
+
+'''
+    print point_in_rect([0,0],[-6.09172980904259, -300.0, 348.9949670250097],
+                        [193.78643559477678, 200.0, 355.9748663655099],
+                        [193.78643559477678, -200.0, 355.9748663655099])
+'''
