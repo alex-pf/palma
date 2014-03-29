@@ -72,12 +72,16 @@ def extension_wall(polylineList, angle, offset, floorNum):
         for j in xrange(len(polylineList[i])):
             rect1 = [downPolylineList[i][j-1],topPolylineList[i][j],downPolylineList[i][j]]
             rect2 = [downPolylineList[i][j-1],topPolylineList[i][j-1],topPolylineList[i][j]]
-            rect3 = [topPolylineList[i][j],topPolylineList[i][j-1],topPolylineList[i][j-2]]
-            rect4 = [downPolylineList[i][j-2],downPolylineList[i][j-1],downPolylineList[i][j]]
+            #rect3 = [topPolylineList[i][j],topPolylineList[i][j-1],topPolylineList[i][j-2]]
+            #rect4 = [downPolylineList[i][j-2],downPolylineList[i][j-1],downPolylineList[i][j]]
             poligonList.append(rect1)
             poligonList.append(rect2)
-            poligonList.append(rect3)
-            poligonList.append(rect4)
+            #poligonList.append(rect3)
+            #poligonList.append(rect4)
+    for polyline in topPolylineList:
+        poligonList = poligonList + rectPolygon(polyline)
+    for polyline in downPolylineList:
+        poligonList = poligonList + rectPolygon(polyline)    
     return poligonList
     
 def get_stl(rectList):
@@ -159,10 +163,10 @@ def rectPolygon(polyline):
 
 
 if __name__ == "__main__":
-    name = 'polygon'
+    name = 'points'
     #get_palma(name)
     # polyline = [[-1,-2],[2,-2],[4,4],[-2,4],[2,2]]
-    polyline = [[-300,-400,0],[-400,100,0],[100,300,0],[400,-100,0],[200,-500,0]]
+    polyline = [[-300,-400,0],[-400,100,0],[0,0,0],[100,300,0],[400,-100,0],[200,-500,0]]
     stlFile = open(name+'.stl','w')
     stlFile.write('\n'.join(get_stl(rectPolygon(polyline))))
     stlFile.close()
