@@ -75,10 +75,10 @@ def extension_wall(polylineList, angle, offset, floorNum):
             poligonList.append(rect1)
             poligonList.append(rect2)
             
-    for polyline in downPolylineList:
-        ppp = rectPolygon(polyline)
-        print ppp
-        poligonList += ppp
+#    for polyline in downPolylineList:
+#        ppp = rectPolygon(polyline)
+#        print ppp
+#        poligonList += ppp
 #    for polyline in topPolylineList:
 #        poligonList += rectPolygon(polyline[::-1])
     return poligonList
@@ -175,14 +175,14 @@ def rectPolygon(polyline):
 
 if __name__ == "__main__":
     name = 'points_1'
-#    get_palma(name)
+    get_palma(name)
 #    polyline = [[-1,-2],[2,-2],[4,4],[-2,4],[2,2]]
 #    polyline = [[-300,-400,0],[-400,100,0],[0,0,0],[100,300,0],[400,-100,0],[200,-500,0]]
 #    polyline = [[-6.09172980904259, 300.0, 348.9949670250097], [193.78643559477678, 200.0, 355.9748663655099], [293.72551829668555, 0.0, 359.46481603576], [193.78643559477678, -200.0, 355.9748663655099], [-6.09172980904259, -300.0, 348.9949670250097], [-205.96989521286196, -200.0, 342.0150676845095], [-305.90897791477073, 0.0, 338.5251180142594], [-205.96989521286196, 200.0, 342.0150676845095]]
-    polyline = get_base(name+'.txt')[0]
-    stlFile = open(name+'.stl','w')
-    stlFile.write('\n'.join(get_stl(rectPolygon(polyline))))
-    stlFile.close()
+#    polyline = get_base(name+'.txt')[0]
+#    stlFile = open(name+'.stl','w')
+#    stlFile.write('\n'.join(get_stl(rectPolygon(polyline))))
+#    stlFile.close()
     
     
 
