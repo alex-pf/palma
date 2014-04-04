@@ -144,6 +144,15 @@ def point_in_rect(p,a,b,c):
         return True
     else:
         return False
+
+def get_angle(a,b,c):
+    # Вычисляем угол abc b - вершина
+    # смещаем b в 0,0
+    a = [a[0]-b[0],a[1]-b[1]]
+    c = [c[0]-b[0],c[1]-b[1]]
+    # Остались точка a и с
+    ang =   atan2(a[0],a[1])-atan2(c[0],c[1])
+    return ang # Если ang > 0 значит угол меньше 180 градусов
     
 def rectPolygon(polyline):
     if len(polyline)==3:
@@ -154,7 +163,11 @@ def rectPolygon(polyline):
         a = litePL.pop(-2)
         b = litePL.pop(-1)
         c = litePL.pop(0)
-        if len([p for p in litePL if point_in_rect(p,a,b,c)])==0:
+        ang = get_angle(a,b,c)
+        print ang
+        ln = len([p for p in litePL if point_in_rect(p,a,b,c)])
+        print ln
+        if ang>0 and ln==0:
             polyline.pop(-1)
             rectList.append([a,b,c])
             rectList = rectList + rectPolygon(polyline)
@@ -164,37 +177,29 @@ def rectPolygon(polyline):
         return rectList
         
             
-def get_angle(a,b,c):
-    # Возвращает угол a (b,a,c). Не забываем, что обход точек по часовой стрелке!
-    # 1 переместим а в 0,0
-    B = [b[0]-a[0],b[1]-a[1]]
-    C = [c[0]-a[0],c[1]-a[1]]
-    # Получили два вектора
-    # Вычисляем скалярное произведение B*C
-    A = B[0]*C[0]+B[1]*C[1]
-    return A
+
 
             
                 
 
 
 if __name__ == "__main__":
-    name = 'points'
+    name = 'points_1'
     #get_palma(name)
 #    polyline = [[-1,-2],[2,-2],[4,4],[-2,4],[2,2]]
 #    polyline = [[-300,-400,0],[-400,100,0],[0,0,0],[100,300,0],[400,-100,0],[200,-500,0]]
 #    polyline = [[-6.09172980904259, 300.0, 348.9949670250097], [193.78643559477678, 200.0, 355.9748663655099], [293.72551829668555, 0.0, 359.46481603576], [193.78643559477678, -200.0, 355.9748663655099], [-6.09172980904259, -300.0, 348.9949670250097], [-205.96989521286196, -200.0, 342.0150676845095], [-305.90897791477073, 0.0, 338.5251180142594], [-205.96989521286196, 200.0, 342.0150676845095]]
-#    polyline = get_base(name+'.txt')[0]
-#    stlFile = open(name+'.stl','w')
-#    stlFile.write('\n'.join(get_stl(rectPolygon(polyline))))
-#    stlFile.close()
-    a = [1,1]
-    b = [2,0]
-    c = [1,2]
-    print get_angle(a,b,c)    
-
+    polyline = get_base(name+'.txt')[0]
+    stlFile = open(name+'.stl','w')
+    stlFile.write('\n'.join(get_stl(rectPolygon(polyline))))
+    stlFile.close()
 '''
-    print point_in_rect([0,0],[-6.09172980904259, -300.0, 348.9949670250097],
-                        [193.78643559477678, 200.0, 355.9748663655099],
-                        [193.78643559477678, -200.0, 355.9748663655099])
-'''
+    for i in xrange(len(polyline)):
+        a = polyline[i]
+        b = polyline[i-1]
+        c = polyline[i-2]
+        print a
+        print b
+        print c
+        print get_angle(a,b,c)'''
+        
