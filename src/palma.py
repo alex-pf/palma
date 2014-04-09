@@ -151,11 +151,16 @@ def get_angle(a,b,c):
     a = [a[0]-b[0],a[1]-b[1]]
     c = [c[0]-b[0],c[1]-b[1]]
     # Остались точка a и с
-    ang =   atan2(a[0],a[1])-atan2(c[0],c[1])
+    at1 = atan2(a[0],a[1])
+    at2 = atan2(c[0],c[1])
+    ang =  at1  - at2
+    print 'a={0}  b={1}'.format(a,c)
+    print '{0} - {1} = {2}'.format(at1,at2,ang)
     return ang # Если ang > 0 значит угол меньше 180 градусов
     
 def rectPolygon(polyline):
     if len(polyline)==3:
+        print polyline
         return [polyline]
     else:
         rectList = []
@@ -163,10 +168,9 @@ def rectPolygon(polyline):
         a = litePL.pop(-2)
         b = litePL.pop(-1)
         c = litePL.pop(0)
+        print [a,b,c]
         ang = get_angle(a,b,c)
-        print ang
         ln = len([p for p in litePL if point_in_rect(p,a,b,c)])
-        print ln
         if ang>0 and ln==0:
             polyline.pop(-1)
             rectList.append([a,b,c])
@@ -184,22 +188,29 @@ def rectPolygon(polyline):
 
 
 if __name__ == "__main__":
-    name = 'points_1'
+    name = 'star'
     #get_palma(name)
 #    polyline = [[-1,-2],[2,-2],[4,4],[-2,4],[2,2]]
 #    polyline = [[-300,-400,0],[-400,100,0],[0,0,0],[100,300,0],[400,-100,0],[200,-500,0]]
 #    polyline = [[-6.09172980904259, 300.0, 348.9949670250097], [193.78643559477678, 200.0, 355.9748663655099], [293.72551829668555, 0.0, 359.46481603576], [193.78643559477678, -200.0, 355.9748663655099], [-6.09172980904259, -300.0, 348.9949670250097], [-205.96989521286196, -200.0, 342.0150676845095], [-305.90897791477073, 0.0, 338.5251180142594], [-205.96989521286196, 200.0, 342.0150676845095]]
-    polyline = get_base(name+'.txt')[0]
-    stlFile = open(name+'.stl','w')
-    stlFile.write('\n'.join(get_stl(rectPolygon(polyline))))
-    stlFile.close()
-'''
-    for i in xrange(len(polyline)):
-        a = polyline[i]
-        b = polyline[i-1]
-        c = polyline[i-2]
-        print a
-        print b
-        print c
-        print get_angle(a,b,c)'''
-        
+#    polyline = get_base(name+'.txt')[0]
+#    print polyline
+#    stlFile = open(name+'.stl','w')
+#    stlFile.write('\n'.join(get_stl(rectPolygon(polyline))))
+#    stlFile.close()
+    a , c = 2 , 0
+    print '{0} - {1} = {2}'.format(a,c,atan2(a,c))
+    a,c = 3,1
+    print '{0} - {1} = {2}'.format(a,c,atan2(a,c))
+    a,c = 0,2
+    print '{0} - {1} = {2}'.format(a,c,atan2(a,c))
+    a,c = -3,4
+    print '{0} - {1} = {2}'.format(a,c,atan2(a,c))
+    a,c = -5,0
+    print '{0} - {1} = {2}'.format(a,c,atan2(a,c))
+    a,c = -4,-5
+    print '{0} - {1} = {2}'.format(a,c,atan2(a,c))
+    a,c = 0,-6
+    print '{0} - {1} = {2}'.format(a,c,atan2(a,c))
+    a,c = 3,-2
+    print '{0} - {1} = {2}'.format(a,c,atan2(a,c))
